@@ -93,7 +93,13 @@ export function HomePage() {
           <div className="text-sm text-gray-500">{getDayOfWeek(lang)}</div>
           <div className="text-2xl font-semibold">{formatTime(currentTime, lang)}</div>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
+          <button
+            onClick={() => dispatch({ type: 'UPDATE_SETTINGS', payload: { language: lang === 'zh' ? 'en' : 'zh' } })}
+            className="text-xs text-gray-400 border border-gray-200 rounded-lg px-2 py-1 active:bg-gray-100"
+          >
+            {lang === 'zh' ? 'EN' : '中'}
+          </button>
           <ProgressRing progress={aacProgress} size={56} strokeWidth={4} color={aacCount >= aacGoal ? 'var(--color-success)' : 'var(--color-primary)'}>
             <span className="text-xs font-bold">{aacCount}/{aacGoal}</span>
             <span className="text-[8px] text-gray-400">AAC</span>
