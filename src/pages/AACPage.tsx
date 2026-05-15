@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { ProgressRing } from '../components/common/ProgressRing';
 import { aacScenarios } from '../data/aac';
 import { vocabulary } from '../data/aac/vocabulary';
-import { t } from '../i18n';
+import { t, scenarioTitle, scenarioDescription, scenarioModelScript, scenarioTips } from '../i18n';
 import type { AACContext, AACPracticeLog, AACScenario } from '../types';
 
 export function AACPage() {
@@ -178,7 +178,7 @@ export function AACPage() {
                     <div className="flex items-center gap-2">
                       <span className="text-lg">{scenario.icon}</span>
                       <div>
-                        <div className="font-medium text-sm">{scenario.title}</div>
+                        <div className="font-medium text-sm">{scenarioTitle(scenario.id, scenario.title, lang)}</div>
                         <div className="text-xs text-gray-400 mt-0.5">{contextLabels[scenario.context]}</div>
                       </div>
                     </div>
@@ -190,17 +190,17 @@ export function AACPage() {
 
                 {expandedScenario === scenario.id && (
                   <div className="px-4 pb-4 border-t border-gray-50">
-                    <div className="text-sm text-gray-600 mt-3 mb-2">{scenario.description}</div>
+                    <div className="text-sm text-gray-600 mt-3 mb-2">{scenarioDescription(scenario.id, scenario.description, lang)}</div>
 
                     <div className="bg-blue-50 rounded-lg p-3 mb-3">
                       <div className="text-xs font-medium text-blue-700 mb-1">{t('aac.howTo', lang)}</div>
-                      <div className="text-sm text-blue-800">{scenario.modelScript}</div>
+                      <div className="text-sm text-blue-800">{scenarioModelScript(scenario.id, scenario.modelScript, lang)}</div>
                     </div>
 
                     {scenario.tips.length > 0 && (
                       <div className="mb-3">
                         <div className="text-xs font-medium text-gray-500 mb-1">{t('aac.tips', lang)}</div>
-                        {scenario.tips.map((tip, i) => (
+                        {scenarioTips(scenario.id, scenario.tips, lang).map((tip, i) => (
                           <div key={i} className="text-xs text-gray-500 flex gap-1 mb-0.5">
                             <span>-</span><span>{tip}</span>
                           </div>
@@ -253,8 +253,8 @@ export function AACPage() {
                     }`}
                   >
                     <span className="mr-1">{word.icon}</span>
-                    {word.word}
-                    <span className="text-xs ml-1 opacity-60">({word.wordEn})</span>
+                    {lang === 'en' ? word.wordEn : word.word}
+                    <span className="text-xs ml-1 opacity-60">({lang === 'en' ? word.word : word.wordEn})</span>
                   </span>
                 ))}
               </div>

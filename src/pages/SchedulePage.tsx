@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { getScheduleForDay, getSlotStatus } from '../utils/schedule-engine';
 import { formatTime, getDayType } from '../utils/time';
-import { t } from '../i18n';
+import { t, slotLabel } from '../i18n';
 
 export function SchedulePage() {
   const { state } = useApp();
@@ -13,7 +13,7 @@ export function SchedulePage() {
   return (
     <div className="flex-1 overflow-y-auto pb-20 px-4 pt-4">
       <h1 className="text-xl font-semibold mb-1">
-        {dayType === 'weekend' ? t('schedule.weekend', lang) : t('schedule.weekday', lang)}{t('schedule.title', lang)}
+        {dayType === 'weekend' ? t('schedule.weekend', lang) : t('schedule.weekday', lang)}{lang === 'en' ? ' ' : ''}{t('schedule.title', lang)}
       </h1>
       <p className="text-sm text-gray-400 mb-4">
         {dayType === 'weekend' ? t('schedule.weekendDesc', lang) : t('schedule.weekdayDesc', lang)}
@@ -55,7 +55,7 @@ export function SchedulePage() {
                   <span className="text-lg">{slot.icon}</span>
                   <div className="flex-1">
                     <div className={`font-medium text-sm ${isCurrent ? 'text-[var(--color-primary)]' : ''}`}>
-                      {slot.label}
+                      {slotLabel(slot.id, slot.label, lang)}
                     </div>
                     <div className="text-xs text-gray-400">
                       {formatTime(slot.startTime, lang)} - {formatTime(slot.endTime, lang)}

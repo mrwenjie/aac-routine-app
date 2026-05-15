@@ -6,7 +6,7 @@ import { formatTime, getDayOfWeek, getCurrentTimeStr, formatMinutesDisplay } fro
 import { selectActivity } from '../utils/rotation';
 import { aacScenarios } from '../data/aac';
 import { recordActivityUsage } from '../utils/storage';
-import { t, getDailyEncouragement } from '../i18n';
+import { t, getDailyEncouragement, slotLabel, scenarioTitle, scenarioModelScript, scenarioTips, activityName, activityDescription, activityAACWords } from '../i18n';
 import type { Activity, AACScenario, AACPracticeLog } from '../types';
 
 export function HomePage() {
@@ -139,7 +139,7 @@ export function HomePage() {
           <div className="flex items-center gap-2 mb-3">
             <span className="text-2xl">{currentSlot.icon}</span>
             <div>
-              <div className="font-semibold text-lg">{currentSlot.label}</div>
+              <div className="font-semibold text-lg">{slotLabel(currentSlot.id, currentSlot.label, lang)}</div>
               <div className="text-xs text-gray-400">
                 {formatTime(currentSlot.startTime, lang)} - {formatTime(currentSlot.endTime, lang)}
               </div>
@@ -158,11 +158,11 @@ export function HomePage() {
             <div className="bg-blue-50 rounded-xl p-4 mb-3">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-lg">{currentScenario.icon}</span>
-                <span className="font-medium text-blue-800 text-sm">{currentScenario.title}</span>
+                <span className="font-medium text-blue-800 text-sm">{scenarioTitle(currentScenario.id, currentScenario.title, lang)}</span>
               </div>
-              <div className="text-sm text-blue-700 mb-2">{currentScenario.modelScript}</div>
+              <div className="text-sm text-blue-700 mb-2">{scenarioModelScript(currentScenario.id, currentScenario.modelScript, lang)}</div>
               {currentScenario.tips.length > 0 && (
-                <div className="text-xs text-blue-500 mb-2">{currentScenario.tips[0]}</div>
+                <div className="text-xs text-blue-500 mb-2">{scenarioTips(currentScenario.id, currentScenario.tips, lang)[0]}</div>
               )}
               <div className="text-xs text-blue-400 italic mb-3">{t('home.modelingReminder', lang)}</div>
               <button
@@ -177,15 +177,15 @@ export function HomePage() {
           {suggestedActivity && (
             <div className="bg-gray-50 rounded-xl p-4">
               <div className="flex justify-between items-start mb-1">
-                <div className="font-medium text-sm">{suggestedActivity.name}</div>
+                <div className="font-medium text-sm">{activityName(suggestedActivity.id, suggestedActivity.name, lang)}</div>
                 <button onClick={handleSwapActivity} className="text-xs text-gray-400 hover:text-gray-600 px-2 py-1">
                   {t('home.swapActivity', lang)}
                 </button>
               </div>
-              <div className="text-sm text-gray-600 mb-2">{suggestedActivity.description}</div>
+              <div className="text-sm text-gray-600 mb-2">{activityDescription(suggestedActivity.id, suggestedActivity.description, lang)}</div>
               {suggestedActivity.aacIntegration && (
                 <div className="text-xs text-gray-400 mb-2">
-                  {t('home.aacVocab', lang)}: {suggestedActivity.aacIntegration.suggestedWords.join('、')}
+                  {t('home.aacVocab', lang)}: {activityAACWords(suggestedActivity.id, suggestedActivity.aacIntegration.suggestedWords, lang).join(lang === 'en' ? ', ' : '、')}
                 </div>
               )}
               <button
@@ -253,7 +253,7 @@ export function HomePage() {
           <div className="flex items-center gap-2">
             <span className="text-xl">{nextSlot.icon}</span>
             <div>
-              <div className="font-medium text-sm">{nextSlot.label}</div>
+              <div className="font-medium text-sm">{slotLabel(nextSlot.id, nextSlot.label, lang)}</div>
               <div className="text-xs text-gray-400">{formatTime(nextSlot.startTime, lang)}</div>
             </div>
             {nextSlot.isAACOpportunity && (
