@@ -29,6 +29,8 @@ export const translations = {
   'home.nextUp': { zh: '接下来', en: 'Next up' },
   'home.tooTired': { zh: '今天太累了，休息一下', en: "Too tired today, take a break" },
   'home.tooTiredConfirm': { zh: '没关系，休息也很重要 ❤️', en: "It's OK, rest is important too ❤️" },
+  'home.howToPlay': { zh: 'AAC怎么融入：', en: 'AAC integration:' },
+  'home.slotTips': { zh: '建议', en: 'Suggestions' },
 
   // Encouragement messages (principle 5: protect the parent)
   'encourage.1': { zh: 'ABA中心每天5.5小时已经在帮助他了。你在家只需要做"足够好"的家长', en: 'ABA center helps him 5.5 hours daily. At home, you just need to be "good enough"' },
@@ -125,6 +127,13 @@ export const translations = {
   'settings.iosStep3': { zh: '选择"添加到主屏幕"', en: 'Select "Add to Home Screen"' },
   'settings.iosStep4': { zh: '点击"添加"', en: 'Tap "Add"' },
   'settings.iosNote': { zh: '添加后可获得全屏体验和通知功能', en: 'Get full-screen experience and notifications after adding' },
+  'settings.dataSection': { zh: '数据管理', en: 'Data Management' },
+  'settings.exportData': { zh: '导出数据', en: 'Export Data' },
+  'settings.importData': { zh: '导入数据', en: 'Import Data' },
+  'settings.exportNote': { zh: '将所有记录保存到文件，方便备份或迁移', en: 'Save all records to a file for backup or migration' },
+  'settings.importNote': { zh: '从之前导出的文件恢复记录', en: 'Restore records from a previously exported file' },
+  'settings.importSuccess': { zh: '导入成功！请刷新页面以加载数据', en: 'Import successful! Please refresh to load data' },
+  'settings.importFail': { zh: '导入失败，请检查文件格式', en: 'Import failed — please check the file format' },
   'settings.version': { zh: 'ZW每日计划 v2.0', en: 'ZW Daily Plan v2.0' },
   'settings.language': { zh: '语言 / Language', en: 'Language / 语言' },
   'settings.langZh': { zh: '中文', en: '中文' },

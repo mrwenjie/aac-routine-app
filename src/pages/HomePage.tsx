@@ -6,7 +6,7 @@ import { formatTime, getDayOfWeek, getCurrentTimeStr, formatMinutesDisplay } fro
 import { selectActivity } from '../utils/rotation';
 import { aacScenarios } from '../data/aac';
 import { recordActivityUsage } from '../utils/storage';
-import { t, getDailyEncouragement, slotLabel, scenarioTitle, scenarioModelScript, scenarioTips, activityName, activityDescription, activityAACWords } from '../i18n';
+import { t, getDailyEncouragement, slotLabel, getSlotTips, scenarioTitle, scenarioModelScript, scenarioTips, activityName, activityDescription, activityAACWords, activityPromptScript } from '../i18n';
 import type { Activity, AACScenario, AACPracticeLog } from '../types';
 
 export function HomePage() {
@@ -184,9 +184,15 @@ export function HomePage() {
               </div>
               <div className="text-sm text-gray-600 mb-2">{activityDescription(suggestedActivity.id, suggestedActivity.description, lang)}</div>
               {suggestedActivity.aacIntegration && (
-                <div className="text-xs text-gray-400 mb-2">
-                  {t('home.aacVocab', lang)}: {activityAACWords(suggestedActivity.id, suggestedActivity.aacIntegration.suggestedWords, lang).join(lang === 'en' ? ', ' : '、')}
-                </div>
+                <>
+                  <div className="bg-green-50 rounded-lg p-2.5 mb-2">
+                    <div className="text-xs font-medium text-green-700 mb-0.5">{t('home.howToPlay', lang)}</div>
+                    <div className="text-xs text-green-800">{activityPromptScript(suggestedActivity.id, suggestedActivity.aacIntegration.promptScript, lang)}</div>
+                  </div>
+                  <div className="text-xs text-gray-400 mb-2">
+                    {t('home.aacVocab', lang)}: {activityAACWords(suggestedActivity.id, suggestedActivity.aacIntegration.suggestedWords, lang).join(lang === 'en' ? ', ' : '、')}
+                  </div>
+                </>
               )}
               <button
                 onClick={handleCompleteActivity}
@@ -197,15 +203,36 @@ export function HomePage() {
             </div>
           )}
 
+          {/* Slot tips for time periods without specific activities */}
+          {!suggestedActivity && !currentSlot.isScreenTime && getSlotTips(currentSlot.id, lang).length > 0 && (
+            <div className="bg-amber-50 rounded-xl p-4">
+              <div className="text-xs font-medium text-amber-700 mb-1.5">{t('home.slotTips', lang)}</div>
+              {getSlotTips(currentSlot.id, lang).map((tip, i) => (
+                <div key={i} className="text-xs text-amber-800 flex gap-1.5 mb-1">
+                  <span className="flex-shrink-0">-</span><span>{tip}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {currentSlot.isScreenTime && (
             <div className="bg-amber-50 rounded-xl p-4">
-              <div className="text-center">
+              <div className="text-center mb-2">
                 <div className="text-sm text-amber-700 font-medium mb-2">{t('home.screenTimeWindow', lang)}</div>
                 <div className="text-3xl font-bold text-amber-800">{formatMinutesDisplay(state.settings.screenTimeWindowMinutes, lang)}</div>
                 <div className="text-xs text-amber-500 mt-1">
                   {t('home.usedToday', lang)}: {formatMinutesDisplay(totalScreenTime, lang)} / {formatMinutesDisplay(state.settings.screenTimeTargetMinutes, lang)}
                 </div>
               </div>
+              {getSlotTips(currentSlot.id, lang).length > 0 && (
+                <div className="border-t border-amber-200 pt-2 mt-2">
+                  {getSlotTips(currentSlot.id, lang).map((tip, i) => (
+                    <div key={i} className="text-xs text-amber-700 flex gap-1.5 mb-1">
+                      <span className="flex-shrink-0">-</span><span>{tip}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

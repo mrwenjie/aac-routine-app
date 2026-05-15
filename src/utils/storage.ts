@@ -136,3 +136,40 @@ export function getTodayScreenTimeMinutes(): number {
   const log = loadTodayLog();
   return log.screenTimeSessions.reduce((total, s) => total + s.durationMinutes, 0);
 }
+
+// Data export/import
+export function exportAllData(): string {
+  const data: Record<string, unknown> = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && (key.startsWith('aac-') || key.startsWith('mindfulness-'))) {
+      try {
+        data[key] = JSON.parse(localStorage.getItem(key)!);
+      } catch {
+        data[key] = localStorage.getItem(key);
+      }
+    }
+  }
+  return JSON.stringify({
+    exportVersion: 1,
+    exportDate: new Date().toISOString(),
+    data,
+  }, null, 2);
+}
+
+export function importAllData(jsonStr: string): { success: boolean; keysImported: number } {
+  try {
+    const parsed = JSON.parse(jsonStr);
+    if (!parsed.data || typeof parsed.data !== 'object') {
+      return { success: false, keysImported: 0 };
+    }
+    let count = 0;
+    for (const [key, value] of Object.entries(parsed.data)) {
+      localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+      count++;
+    }
+    return { success: true, keysImported: count };
+  } catch {
+    return { success: false, keysImported: 0 };
+  }
+}

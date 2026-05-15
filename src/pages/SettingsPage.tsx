@@ -1,5 +1,7 @@
+import { useState, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { requestNotificationPermission, canSendNotifications } from '../utils/notifications';
+import { exportAllData, importAllData } from '../utils/storage';
 import { t } from '../i18n';
 import type { Language } from '../i18n';
 
@@ -52,6 +54,37 @@ export function SettingsPage() {
 
   const handleLanguageChange = (newLang: Language) => {
     updateSetting('language', newLang);
+  };
+
+  const [importMsg, setImportMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExport = () => {
+    const json = exportAllData();
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `zw-daily-plan-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = importAllData(reader.result as string);
+      if (result.success) {
+        setImportMsg({ ok: true, text: t('settings.importSuccess', lang) });
+      } else {
+        setImportMsg({ ok: false, text: t('settings.importFail', lang) });
+      }
+    };
+    reader.readAsText(file);
+    // Reset so the same file can be re-selected
+    e.target.value = '';
   };
 
   return (
@@ -228,6 +261,38 @@ export function SettingsPage() {
             </label>
           ))}
         </div>
+      </div>
+
+      {/* Data export/import */}
+      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
+        <div className="text-sm font-medium mb-1">{t('settings.dataSection', lang)}</div>
+        <div className="text-xs text-gray-400 mb-3">{t('settings.exportNote', lang)}</div>
+        <div className="flex gap-2 mb-2">
+          <button
+            onClick={handleExport}
+            className="flex-1 bg-[var(--color-primary)] text-white rounded-lg py-2 text-sm font-medium active:opacity-80"
+          >
+            {t('settings.exportData', lang)}
+          </button>
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="flex-1 bg-gray-100 text-gray-700 rounded-lg py-2 text-sm font-medium active:bg-gray-200"
+          >
+            {t('settings.importData', lang)}
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            onChange={handleImport}
+            className="hidden"
+          />
+        </div>
+        {importMsg && (
+          <div className={`text-xs mt-1 ${importMsg.ok ? 'text-green-600' : 'text-red-500'}`}>
+            {importMsg.text}
+          </div>
+        )}
       </div>
 
       {/* Add to Home Screen Guide */}

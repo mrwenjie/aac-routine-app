@@ -43,6 +43,58 @@ export function slotLabel(id: string, zhLabel: string, lang: Language): string {
   return lang === 'en' ? (slotLabelsEn[id] ?? zhLabel) : zhLabel;
 }
 
+// ── Slot tips (for slots without activity pools) ─────────────────────
+const slotTipsData: Record<string, { zh: string[]; en: string[] }> = {
+  // Weekday
+  'weekday-1': {
+    zh: ['回到家时用AAC说"回来了"或"你好"，等几秒看他有没有回应', '给孩子看今天剩下的视觉日程，让他知道接下来做什么'],
+    en: ['Use AAC to say "I\'m home" or "hello" — wait a few seconds for his response', 'Show child the remaining visual schedule so he knows what\'s coming'],
+  },
+  'weekday-3': {
+    zh: ['用AAC让孩子选晚餐："要米饭还是面条？"', '给小份，吃完后练习"还要"', '吃饭时顺便评论食物："好吃！""热的！"'],
+    en: ['Use AAC for dinner choice: "Rice or noodles?"', 'Give small portions — practice "more" when he finishes', 'Comment on food: "Yummy!" "Hot!"'],
+  },
+  'weekday-4': {
+    zh: ['设一个视觉计时器，让孩子看到剩余时间', '选有语言示范的节目（如小猪佩奇、Bluey）', '结束时用AAC说"结束了"，练习过渡'],
+    en: ['Set a visual timer so child can see remaining time', 'Choose shows with language modeling (Peppa Pig, Bluey)', 'Use AAC to say "all done" when finished — practice transitions'],
+  },
+  // Weekend
+  'weekend-1': {
+    zh: ['用AAC让孩子选早餐：鸡蛋还是面包？', '周末不赶时间，多等几秒让他用AAC', '吃早餐时练习"我要___"句型'],
+    en: ['Use AAC for breakfast choice: eggs or bread?', 'Weekend = more wait time — let him use AAC', 'Practice "I want ___" during breakfast'],
+  },
+  'weekend-2': {
+    zh: ['早上的屏幕时间可以选教育类节目', '看完后用AAC描述刚看到的："看到什么了？"', '设好计时器，结束时练习"结束了"'],
+    en: ['Morning screen time — try educational content', 'After watching, use AAC: "What did you see?"', 'Set a timer, practice "all done" when it ends'],
+  },
+  'weekend-7': {
+    zh: ['午饭时让孩子选择："吃这个还是那个？"', '用AAC评论食物的样子和味道', '让孩子帮忙收碗筷，边做边用AAC描述'],
+    en: ['Let child choose lunch: "This one or that one?"', 'Use AAC to comment on how food looks and tastes', 'Let child help clear the table, describe actions with AAC'],
+  },
+  'weekend-8': {
+    zh: ['午饭后的屏幕时间控制在30分钟以内', '可以看和之前活动相关的视频强化学习', '结束后自然过渡到午休'],
+    en: ['Keep post-lunch screen time under 30 minutes', 'Watch videos related to earlier activities for reinforcement', 'Naturally transition to rest time after'],
+  },
+  'weekend-12': {
+    zh: ['下午的屏幕时间可以看互动类APP', '和孩子一起看，边看边用AAC描述', '注意今天的总屏幕时间'],
+    en: ['Afternoon screen time — try interactive apps', 'Watch together, describe what you see with AAC', 'Keep track of total screen time today'],
+  },
+  'weekend-15': {
+    zh: ['晚饭时间和平日一样练习选择', '试着让孩子用AAC说"谢谢"', '吃饭是每天最自然的AAC练习机会'],
+    en: ['Practice choices at dinner just like weekdays', 'Try having child say "thank you" on AAC', 'Mealtimes are the most natural AAC practice opportunity'],
+  },
+  'weekend-18': {
+    zh: ['这是今天最后一次屏幕时间', '可以看安静的节目帮助平静下来', '结束后直接进入安静活动'],
+    en: ['This is the last screen time today', 'Watch calm content to help wind down', 'Transition directly to quiet activity after'],
+  },
+};
+
+export function getSlotTips(slotId: string, lang: Language): string[] {
+  const tips = slotTipsData[slotId];
+  if (!tips) return [];
+  return lang === 'en' ? tips.en : tips.zh;
+}
+
 // ── AAC scenario content ──────────────────────────────────────────────
 interface ScenarioEn {
   title: string;
