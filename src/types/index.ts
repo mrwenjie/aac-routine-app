@@ -129,6 +129,22 @@ export interface DailyLog {
   notes?: string;
 }
 
+// === Mindfulness Types ===
+
+export interface MindfulnessReflection {
+  date: string;
+  aboutChild?: string;
+  aboutSelf?: string;
+  tomorrowIntention?: string;
+}
+
+export interface WeeklyCheckIn {
+  weekDate: string; // Sunday date
+  exhaustionLevel: 1 | 2 | 3 | 4;
+  didSelfCare: boolean;
+  selfPatienceLevel: 1 | 2 | 3;
+}
+
 // === Settings Types ===
 
 export interface AppSettings {

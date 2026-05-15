@@ -6,6 +6,7 @@ import { SchedulePage } from './pages/SchedulePage';
 import { AACPage } from './pages/AACPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { MindfulnessPage } from './pages/MindfulnessPage';
 import { getScheduleForDay, getCurrentSlot, getNextSlot } from './utils/schedule-engine';
 import { sendNotification, canSendNotifications } from './utils/notifications';
 import { timeToMinutes, getCurrentMinutes } from './utils/time';
@@ -59,6 +60,7 @@ function AppContent() {
       case 'schedule': return <SchedulePage />;
       case 'aac': return <AACPage />;
       case 'history': return <HistoryPage />;
+      case 'mindfulness': return <MindfulnessPage />;
       case 'settings': return <SettingsPage />;
       default: return <HomePage />;
     }

@@ -15,6 +15,7 @@ export function BottomNav({ activePage, onNavigate }: BottomNavProps) {
     { id: 'schedule', label: t('nav.schedule', lang), icon: '📅' },
     { id: 'aac', label: t('nav.aac', lang), icon: '💬' },
     { id: 'history', label: t('nav.history', lang), icon: '📊' },
+    { id: 'mindfulness', label: t('nav.mindfulness', lang), icon: '🌿' },
     { id: 'settings', label: t('nav.settings', lang), icon: '⚙️' },
   ];
 

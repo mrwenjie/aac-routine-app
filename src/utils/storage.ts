@@ -1,4 +1,4 @@
-import type { AppSettings, DailyLog } from '../types';
+import type { AppSettings, DailyLog, MindfulnessReflection } from '../types';
 import { DEFAULT_SETTINGS } from '../types';
 import { getTodayDateStr, getDayType } from './time';
 
@@ -92,6 +92,43 @@ export function recordActivityUsage(activityId: string): void {
     history.push({ activityId, lastUsedDate: today, usageCount: 1 });
   }
   saveActivityHistory(history);
+}
+
+// Mindfulness reflections
+const REFLECTION_PREFIX = 'mindfulness-reflection-';
+const WORDS_CACHE_KEY = 'mindfulness-words-cache';
+
+export function loadReflection(dateStr: string): MindfulnessReflection | null {
+  try {
+    const raw = localStorage.getItem(REFLECTION_PREFIX + dateStr);
+    if (raw) return JSON.parse(raw);
+  } catch { /* ignore */ }
+  return null;
+}
+
+export function saveReflection(reflection: MindfulnessReflection): void {
+  localStorage.setItem(REFLECTION_PREFIX + reflection.date, JSON.stringify(reflection));
+}
+
+export interface WordsCache {
+  fetchDate: string;
+  data: {
+    affirmations: { zh: string; en: string }[];
+    permissions: { zh: string; en: string }[];
+    microTips: { zh: string; en: string }[];
+  };
+}
+
+export function loadWordsCache(): WordsCache | null {
+  try {
+    const raw = localStorage.getItem(WORDS_CACHE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch { /* ignore */ }
+  return null;
+}
+
+export function saveWordsCache(cache: WordsCache): void {
+  localStorage.setItem(WORDS_CACHE_KEY, JSON.stringify(cache));
 }
 
 // Screen time tracking

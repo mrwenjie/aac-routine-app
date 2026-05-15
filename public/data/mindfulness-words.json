@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "lastUpdated": "2026-05-15",
+  "affirmations": [
+    { "zh": "我的孩子的自闭症不是我的错。我是他需要的家长", "en": "My child's autism is not my fault. I am the parent they need." },
+    { "zh": "我正在用现有的资源做到最好", "en": "I am doing the best I can with what I have today." },
+    { "zh": "每个家庭的旅程都不同。比较会偷走我的平静", "en": "Every family's journey is different. Comparing steals my peace." },
+    { "zh": "哪怕2分钟的自我照顾，也是力量的表现，不是自私", "en": "Even 2 minutes of self-care is an act of strength, not selfishness." },
+    { "zh": "我的孩子是安全的、被爱的、被照顾的。这不是失败", "en": "My child is safe, loved, and cared for. That is not failure." },
+    { "zh": "进步不总是看得见的。小小的步伐也算数", "en": "Progress is not always visible. Small steps count." },
+    { "zh": "现在有成千上万的家长和我有同样的感受。我不是一个人", "en": "Thousands of parents share this exact feeling right now. I am not alone." },
+    { "zh": "我被允许感到挫败。挫败不代表我不爱我的孩子", "en": "I am allowed to feel frustrated. Frustration does not mean I love my child any less." },
+    { "zh": "他在ABA中心每天5.5小时已经在接受专业帮助了。我不需要在家做治疗师", "en": "He gets 5.5 hours of professional help at ABA daily. I don't need to be a therapist at home." },
+    { "zh": "有些日子生存就是胜利。今天就是这样的日子也没关系", "en": "Some days survival is the victory. It's okay if today is one of those days." }
+  ],
+  "permissions": [
+    { "zh": "你今天已经做了足够多。可以停下来了", "en": "You have done enough today. It is okay to stop." },
+    { "zh": "你的孩子需要一个休息好的家长，而不是一个完美的家长", "en": "Your child needs a rested parent, not a perfect one." },
+    { "zh": "给自己5分钟不是自私——是必须的", "en": "Taking 5 minutes for yourself is not selfish — it is necessary." },
+    { "zh": "今晚，你不需要研究、计划或修复任何事情。只需要存在", "en": "Tonight, you don't need to research, plan, or fix anything. Just be." },
+    { "zh": "照顾好自己，才能更好地照顾他", "en": "Take care of yourself first, so you can better care for him." },
+    { "zh": "休息不是放弃。休息是为了走更远的路", "en": "Rest is not giving up. Rest is preparation for the road ahead." },
+    { "zh": "你不需要每件事都做对。你只需要在场", "en": "You don't need to get everything right. You just need to be present." },
+    { "zh": "允许自己今晚什么都不做", "en": "Allow yourself to do nothing tonight." }
+  ],
+  "microTips": [
+    { "zh": "研究显示：自闭症家长的压力水平相当于战区退伍军人。你面对的确实很难", "en": "Research shows: ASD parents experience stress levels comparable to combat veterans. What you face is genuinely hard." },
+    { "zh": "研究证明：每天5分钟的正念练习就能降低皮质醇水平、改善情绪", "en": "Studies show: just 5 minutes of daily mindfulness reduces cortisol and improves mood." },
+    { "zh": "自我关怀不是自我怜悯。研究表明它实际上让你成为更有效的家长", "en": "Self-compassion is not self-pity. Research shows it actually makes you a more effective parent." },
+    { "zh": "同时感到悲伤和爱是正常的。两种感受都是有效的", "en": "It is normal to grieve and love at the same time. Both feelings are valid." },
+    { "zh": "寻求帮助不是软弱。建立支持网络是最有效的应对策略之一", "en": "Asking for help is not weakness. Building a support network is one of the most effective coping strategies." },
+    { "zh": "研究表明：每天15-20分钟的有意识互动就足以产生显著效果", "en": "Research shows: just 15-20 minutes of intentional interaction daily makes a significant impact." }
+  ]
+}
