@@ -4,9 +4,10 @@ export const aacScenarios: AACScenario[] = [
   // Greeting scenarios
   {
     id: 'sc-001',
+    icon: '👋',
     context: 'greeting',
     title: '回家打招呼',
-    description: '接卓伟回家时，用AAC和他打招呼',
+    description: '接ZW回家时，用AAC和他打招呼',
     targetVocabulary: ['v-036', 'v-037'],
     modelScript: '到家后，拿出AAC，指着"你好"说"你好！回家啦！"。等几秒看他是否模仿按',
     tips: ['不要急，给他5-10秒的等待时间', '他按了就马上给正面反馈', '即使他没按，你示范了也是有效的'],
@@ -14,6 +15,7 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-002',
+    icon: '🌙',
     context: 'greeting',
     title: '睡前说晚安',
     description: '睡觉前用AAC说晚安/再见',
@@ -26,9 +28,10 @@ export const aacScenarios: AACScenario[] = [
   // Food choice scenarios
   {
     id: 'sc-003',
+    icon: '🍚',
     context: 'foodChoice',
     title: '晚饭选食物',
-    description: '吃饭时让卓伟用AAC选择想吃什么',
+    description: '吃饭时让ZW用AAC选择想吃什么',
     targetVocabulary: ['v-015', 'v-016', 'v-017', 'v-003'],
     modelScript: '把两个食物放在面前，指着AAC上对应的图片问"要米饭还是面条？"等他选择',
     tips: ['先从两个选项开始，不要给太多', '他指向食物时，引导他先在AAC上按', '选了就马上给他，强化AAC的作用'],
@@ -36,6 +39,7 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-004',
+    icon: '➕',
     context: 'foodChoice',
     title: '要更多食物',
     description: '吃饭时给少量食物，让他用AAC要更多',
@@ -46,9 +50,10 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-005',
+    icon: '🥤',
     context: 'foodChoice',
     title: '选择饮料',
-    description: '让卓伟用AAC选择想喝什么',
+    description: '让ZW用AAC选择想喝什么',
     targetVocabulary: ['v-011', 'v-013', 'v-019', 'v-021'],
     modelScript: '拿出两个杯子（水和牛奶/果汁），指着AAC问"喝水？还是喝牛奶？"',
     tips: ['他已经会用AAC说"water"，可以扩展到其他饮料', '如果他直接拿，温和地引导"先按AAC告诉我"'],
@@ -58,9 +63,10 @@ export const aacScenarios: AACScenario[] = [
   // Activity choice scenarios
   {
     id: 'sc-006',
+    icon: '🎮',
     context: 'activityChoice',
     title: '选择玩什么',
-    description: '让卓伟用AAC选择想做的活动',
+    description: '让ZW用AAC选择想做的活动',
     targetVocabulary: ['v-022', 'v-047', 'v-049', 'v-052'],
     modelScript: '拿出两个选项（比如球和泡泡），指着AAC问"玩球？还是泡泡？"',
     tips: ['用实物配合AAC图片', '选了就马上做那个活动', '这是最自然的AAC使用场景之一'],
@@ -68,9 +74,10 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-007',
+    icon: '🌳',
     context: 'activityChoice',
     title: '出门还是在家',
-    description: '让卓伟选择去外面还是在家玩',
+    description: '让ZW选择去外面还是在家玩',
     targetVocabulary: ['v-052', 'v-022', 'v-007'],
     modelScript: '指着门和AAC上的"外面"说"去外面？"再指着玩具和"玩"说"在家玩？"',
     tips: ['用手势配合AAC', '能出门就尽量出门（他喜欢户外活动）', '天黑就跳过这个选择，直接做室内活动'],
@@ -80,6 +87,7 @@ export const aacScenarios: AACScenario[] = [
   // Requesting scenarios
   {
     id: 'sc-008',
+    icon: '🤝',
     context: 'requesting',
     title: '请求帮忙',
     description: '在孩子需要帮助时，引导他用AAC说"帮忙"',
@@ -90,6 +98,7 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-009',
+    icon: '🔄',
     context: 'requesting',
     title: '要求继续活动',
     description: '做他喜欢的活动时暂停，让他用AAC请求继续',
@@ -102,9 +111,10 @@ export const aacScenarios: AACScenario[] = [
   // Commenting scenarios
   {
     id: 'sc-010',
+    icon: '😊',
     context: 'commenting',
     title: '描述感受',
-    description: '帮助卓伟用AAC表达他的感受',
+    description: '帮助ZW用AAC表达他的感受',
     targetVocabulary: ['v-042', 'v-043', 'v-044'],
     modelScript: '他看起来开心时，指着AAC说"开心！你好开心！"。他看起来累时，"累了？你累了"',
     tips: ['先从你示范开始，不要求他立刻回应', '在自然的情绪时刻描述，不要专门"教"', '用夸张的表情配合'],
@@ -112,6 +122,7 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-011',
+    icon: '👀',
     context: 'commenting',
     title: '描述看到的东西',
     description: '散步或看书时，用AAC命名看到的东西',
@@ -124,9 +135,10 @@ export const aacScenarios: AACScenario[] = [
   // Protesting scenarios
   {
     id: 'sc-012',
+    icon: '🛑',
     context: 'protesting',
     title: '说"不要"和"好了"',
-    description: '教卓伟用AAC适当地拒绝或表示结束',
+    description: '教ZW用AAC适当地拒绝或表示结束',
     targetVocabulary: ['v-004', 'v-006', 'v-002'],
     modelScript: '当他推开东西或转头时，指着AAC说"不要？你不要。好的！"帮他用AAC表达',
     tips: ['接受他的拒绝！他用AAC说不要比哭闹好得多', '这教他"说不要"是有用的', '屏幕时间结束时是练习"好了"的好机会'],
@@ -136,6 +148,7 @@ export const aacScenarios: AACScenario[] = [
   // Social routine scenarios
   {
     id: 'sc-013',
+    icon: '💖',
     context: 'socialRoutine',
     title: '说谢谢',
     description: '给他东西时，引导用AAC说谢谢',
@@ -146,6 +159,7 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-014',
+    icon: '🔁',
     context: 'socialRoutine',
     title: '轮流玩',
     description: '玩游戏时练习"轮到我"和"轮到你"',
@@ -156,9 +170,10 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-015',
+    icon: '🛁',
     context: 'requesting',
     title: '洗澡时选玩具',
-    description: '洗澡前让卓伟用AAC选择带什么玩具进浴缸',
+    description: '洗澡前让ZW用AAC选择带什么玩具进浴缸',
     targetVocabulary: ['v-003', 'v-047', 'v-022'],
     modelScript: '拿出2-3个洗澡玩具，指着AAC问"要哪个？"等他选择',
     tips: ['洗澡是每天固定的，很容易形成习惯', '选完就给他，强化AAC的功能', '可以慢慢增加选项数量'],
@@ -166,9 +181,10 @@ export const aacScenarios: AACScenario[] = [
   },
   {
     id: 'sc-016',
+    icon: '🌅',
     context: 'foodChoice',
     title: '早餐选择（周末）',
-    description: '周末早餐时间更充裕，让卓伟用AAC选择早餐',
+    description: '周末早餐时间更充裕，让ZW用AAC选择早餐',
     targetVocabulary: ['v-020', 'v-013', 'v-018', 'v-003'],
     modelScript: '拿出两种早餐选项，指着AAC问"吃什么？要牛奶还是果汁？"',
     tips: ['周末时间多，可以多等一会儿', '配合实物展示效果更好', '鼓励他自己翻找AAC上的图片'],

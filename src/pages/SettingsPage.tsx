@@ -1,28 +1,31 @@
 import { useApp } from '../context/AppContext';
 import { requestNotificationPermission, canSendNotifications } from '../utils/notifications';
+import { t } from '../i18n';
+import type { Language } from '../i18n';
 
-const equipmentOptions = [
-  { id: 'weighted_blanket', name: '加重毯' },
-  { id: 'mini_trampoline', name: '小蹦床' },
-  { id: 'foam_roller', name: '泡沫滚筒' },
-  { id: 'squeeze_ball', name: '挤压球/压力球' },
-  { id: 'pop_it', name: 'Pop-it按压板' },
-  { id: 'kinetic_sand', name: '太空沙' },
-  { id: 'playdoh', name: '彩泥/Play-Doh' },
-  { id: 'bubbles', name: '泡泡' },
-  { id: 'sensory_bin', name: '感官箱（米/豆子）' },
-  { id: 'puzzle', name: '拼图' },
-  { id: 'blocks', name: '积木' },
-  { id: 'magnetic_tiles', name: '磁力片' },
-  { id: 'crayons', name: '蜡笔/彩笔' },
-  { id: 'soft_ball', name: '软球' },
-  { id: 'blanket', name: '大毯子' },
-  { id: 'bike_scooter', name: '自行车/滑板车' },
+const equipmentOptions: { id: string; zh: string; en: string }[] = [
+  { id: 'weighted_blanket', zh: '加重毯', en: 'Weighted blanket' },
+  { id: 'mini_trampoline', zh: '小蹦床', en: 'Mini trampoline' },
+  { id: 'foam_roller', zh: '泡沫滚筒', en: 'Foam roller' },
+  { id: 'squeeze_ball', zh: '挤压球/压力球', en: 'Squeeze ball' },
+  { id: 'pop_it', zh: 'Pop-it按压板', en: 'Pop-it fidget' },
+  { id: 'kinetic_sand', zh: '太空沙', en: 'Kinetic sand' },
+  { id: 'playdoh', zh: '彩泥/Play-Doh', en: 'Play-Doh' },
+  { id: 'bubbles', zh: '泡泡', en: 'Bubbles' },
+  { id: 'sensory_bin', zh: '感官箱（米/豆子）', en: 'Sensory bin (rice/beans)' },
+  { id: 'puzzle', zh: '拼图', en: 'Puzzles' },
+  { id: 'blocks', zh: '积木', en: 'Blocks' },
+  { id: 'magnetic_tiles', zh: '磁力片', en: 'Magnetic tiles' },
+  { id: 'crayons', zh: '蜡笔/彩笔', en: 'Crayons/markers' },
+  { id: 'soft_ball', zh: '软球', en: 'Soft ball' },
+  { id: 'blanket', zh: '大毯子', en: 'Large blanket' },
+  { id: 'bike_scooter', zh: '自行车/滑板车', en: 'Bike/scooter' },
 ];
 
 export function SettingsPage() {
   const { state, dispatch } = useApp();
   const { settings } = state;
+  const lang = settings.language;
 
   const updateSetting = (key: string, value: any) => {
     dispatch({ type: 'UPDATE_SETTINGS', payload: { [key]: value } });
@@ -47,17 +50,44 @@ export function SettingsPage() {
     }
   };
 
+  const handleLanguageChange = (newLang: Language) => {
+    updateSetting('language', newLang);
+  };
+
   return (
     <div className="flex-1 overflow-y-auto pb-20 px-4 pt-4">
-      <h1 className="text-xl font-semibold mb-4">设置</h1>
+      <h1 className="text-xl font-semibold mb-4">{t('settings.title', lang)}</h1>
+
+      {/* Language toggle */}
+      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
+        <div className="text-sm font-medium mb-3">{t('settings.language', lang)}</div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => handleLanguageChange('zh')}
+            className={`flex-1 py-2 rounded-lg text-sm font-medium ${
+              lang === 'zh' ? 'bg-[var(--color-primary)] text-white' : 'bg-gray-100 text-gray-600'
+            }`}
+          >
+            {t('settings.langZh', lang)}
+          </button>
+          <button
+            onClick={() => handleLanguageChange('en')}
+            className={`flex-1 py-2 rounded-lg text-sm font-medium ${
+              lang === 'en' ? 'bg-[var(--color-primary)] text-white' : 'bg-gray-100 text-gray-600'
+            }`}
+          >
+            {t('settings.langEn', lang)}
+          </button>
+        </div>
+      </div>
 
       {/* Time settings */}
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
-        <div className="text-sm font-medium mb-3">时间安排</div>
+        <div className="text-sm font-medium mb-3">{t('settings.timeSection', lang)}</div>
 
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">平日接孩子时间</span>
+            <span className="text-sm text-gray-600">{t('settings.pickupTime', lang)}</span>
             <input
               type="time"
               value={settings.weekdayPickupTime}
@@ -66,7 +96,7 @@ export function SettingsPage() {
             />
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">平日睡觉时间</span>
+            <span className="text-sm text-gray-600">{t('settings.bedtime', lang)}</span>
             <input
               type="time"
               value={settings.weekdayBedtime}
@@ -75,7 +105,7 @@ export function SettingsPage() {
             />
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">周末起床时间</span>
+            <span className="text-sm text-gray-600">{t('settings.weekendWake', lang)}</span>
             <input
               type="time"
               value={settings.weekendWakeTime}
@@ -88,9 +118,9 @@ export function SettingsPage() {
 
       {/* AAC Goals */}
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
-        <div className="text-sm font-medium mb-3">AAC目标</div>
+        <div className="text-sm font-medium mb-3">{t('settings.aacGoals', lang)}</div>
         <div className="flex justify-between items-center">
-          <span className="text-sm text-gray-600">每日AAC练习次数</span>
+          <span className="text-sm text-gray-600">{t('settings.dailyGoal', lang)}</span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => updateSetting('aacDailyGoal', Math.max(1, settings.aacDailyGoal - 1))}
@@ -111,10 +141,10 @@ export function SettingsPage() {
 
       {/* Screen Time */}
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
-        <div className="text-sm font-medium mb-3">屏幕时间</div>
+        <div className="text-sm font-medium mb-3">{t('settings.screenTime', lang)}</div>
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">每日目标上限</span>
+            <span className="text-sm text-gray-600">{t('settings.dailyLimit', lang)}</span>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => updateSetting('screenTimeTargetMinutes', Math.max(30, settings.screenTimeTargetMinutes - 15))}
@@ -122,7 +152,9 @@ export function SettingsPage() {
               >
                 -
               </button>
-              <span className="w-16 text-center text-sm font-semibold">{settings.screenTimeTargetMinutes}分钟</span>
+              <span className="w-16 text-center text-sm font-semibold">
+                {settings.screenTimeTargetMinutes}{t('settings.minutes', lang)}
+              </span>
               <button
                 onClick={() => updateSetting('screenTimeTargetMinutes', settings.screenTimeTargetMinutes + 15)}
                 className="w-8 h-8 bg-gray-100 rounded-lg text-lg font-medium active:bg-gray-200"
@@ -132,7 +164,7 @@ export function SettingsPage() {
             </div>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">每次窗口时长</span>
+            <span className="text-sm text-gray-600">{t('settings.windowLength', lang)}</span>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => updateSetting('screenTimeWindowMinutes', Math.max(10, settings.screenTimeWindowMinutes - 5))}
@@ -140,7 +172,9 @@ export function SettingsPage() {
               >
                 -
               </button>
-              <span className="w-16 text-center text-sm font-semibold">{settings.screenTimeWindowMinutes}分钟</span>
+              <span className="w-16 text-center text-sm font-semibold">
+                {settings.screenTimeWindowMinutes}{t('settings.minutes', lang)}
+              </span>
               <button
                 onClick={() => updateSetting('screenTimeWindowMinutes', settings.screenTimeWindowMinutes + 5)}
                 className="w-8 h-8 bg-gray-100 rounded-lg text-lg font-medium active:bg-gray-200"
@@ -154,12 +188,12 @@ export function SettingsPage() {
 
       {/* Notifications */}
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
-        <div className="text-sm font-medium mb-3">通知</div>
+        <div className="text-sm font-medium mb-3">{t('settings.notifications', lang)}</div>
         <div className="flex justify-between items-center">
           <div>
-            <span className="text-sm text-gray-600">开启提醒通知</span>
+            <span className="text-sm text-gray-600">{t('settings.enableNotif', lang)}</span>
             {!canSendNotifications() && settings.notificationsEnabled && (
-              <div className="text-xs text-amber-500 mt-0.5">请在浏览器设置中允许通知</div>
+              <div className="text-xs text-amber-500 mt-0.5">{t('settings.allowNotif', lang)}</div>
             )}
           </div>
           <button
@@ -179,8 +213,8 @@ export function SettingsPage() {
 
       {/* Equipment */}
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
-        <div className="text-sm font-medium mb-1">家里有的设备/玩具</div>
-        <div className="text-xs text-gray-400 mb-3">勾选后APP只会推荐你有的</div>
+        <div className="text-sm font-medium mb-1">{t('settings.equipment', lang)}</div>
+        <div className="text-xs text-gray-400 mb-3">{t('settings.equipmentNote', lang)}</div>
         <div className="space-y-2">
           {equipmentOptions.map(item => (
             <label key={item.id} className="flex items-center gap-2 cursor-pointer">
@@ -190,7 +224,7 @@ export function SettingsPage() {
                 onChange={() => toggleEquipment(item.id)}
                 className="w-4 h-4 rounded border-gray-300 text-[var(--color-primary)]"
               />
-              <span className="text-sm text-gray-600">{item.name}</span>
+              <span className="text-sm text-gray-600">{item[lang]}</span>
             </label>
           ))}
         </div>
@@ -198,18 +232,18 @@ export function SettingsPage() {
 
       {/* Add to Home Screen Guide */}
       <div className="bg-blue-50 rounded-xl p-4 mb-4">
-        <div className="text-sm font-medium text-blue-800 mb-2">添加到iPhone主屏幕</div>
+        <div className="text-sm font-medium text-blue-800 mb-2">{t('settings.iosGuide', lang)}</div>
         <ol className="text-xs text-blue-700 space-y-1">
-          <li>1. 在Safari中打开此页面</li>
-          <li>2. 点击底部的分享按钮（方框+箭头）</li>
-          <li>3. 选择"添加到主屏幕"</li>
-          <li>4. 点击"添加"</li>
+          <li>1. {t('settings.iosStep1', lang)}</li>
+          <li>2. {t('settings.iosStep2', lang)}</li>
+          <li>3. {t('settings.iosStep3', lang)}</li>
+          <li>4. {t('settings.iosStep4', lang)}</li>
         </ol>
-        <div className="text-xs text-blue-500 mt-2">添加后可获得全屏体验和通知功能</div>
+        <div className="text-xs text-blue-500 mt-2">{t('settings.iosNote', lang)}</div>
       </div>
 
       <div className="text-center text-xs text-gray-300 pb-4">
-        卓伟每日计划 v1.0
+        {t('settings.version', lang)}
       </div>
     </div>
   );

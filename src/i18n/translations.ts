@@ -1,0 +1,168 @@
+export type Language = 'zh' | 'en';
+
+export const translations = {
+  // Bottom nav
+  'nav.home': { zh: '首页', en: 'Home' },
+  'nav.schedule': { zh: '日程', en: 'Schedule' },
+  'nav.aac': { zh: 'AAC', en: 'AAC' },
+  'nav.history': { zh: '记录', en: 'History' },
+  'nav.settings': { zh: '设置', en: 'Settings' },
+
+  // Home page
+  'home.scheduleNotStarted': { zh: '日程还没开始', en: 'Schedule not started yet' },
+  'home.firstSlot': { zh: '第一个时间段', en: 'First slot' },
+  'home.scheduleEnded': { zh: '今天的日程已结束', en: "Today's schedule is done" },
+  'home.restWell': { zh: '好好休息，明天继续加油', en: 'Rest well, tomorrow is a new day' },
+  'home.aacOpportunity': { zh: 'AAC练习机会！', en: 'AAC practice opportunity!' },
+  'home.logModeling': { zh: '✓ 我示范了', en: '✓ I modeled it' },
+  'home.modelingReminder': { zh: '即使他没有按AAC，你的示范本身就是在帮助他学习', en: 'Even if he didn\'t press AAC, your modeling itself is helping him learn' },
+  'home.swapActivity': { zh: '换一个', en: 'Swap' },
+  'home.aacVocab': { zh: 'AAC词汇', en: 'AAC words' },
+  'home.activityDone': { zh: '完成活动', en: 'Done' },
+  'home.screenTimeWindow': { zh: '屏幕时间窗口', en: 'Screen time window' },
+  'home.usedToday': { zh: '今日已用', en: 'Used today' },
+  'home.screenTimeToday': { zh: '今日屏幕时间', en: 'Screen time today' },
+  'home.target': { zh: '目标', en: 'Target' },
+  'home.activitiesDone': { zh: '已完成活动', en: 'Activities done' },
+  'home.noActivities': { zh: '还没有活动', en: 'No activities yet' },
+  'home.keepGoing': { zh: '继续加油', en: 'Keep going' },
+  'home.nextUp': { zh: '接下来', en: 'Next up' },
+  'home.tooTired': { zh: '今天太累了，休息一下', en: "Too tired today, take a break" },
+  'home.tooTiredConfirm': { zh: '没关系，休息也很重要 ❤️', en: "It's OK, rest is important too ❤️" },
+
+  // Encouragement messages (principle 5: protect the parent)
+  'encourage.1': { zh: 'ABA中心每天5.5小时已经在帮助他了。你在家只需要做"足够好"的家长', en: 'ABA center helps him 5.5 hours daily. At home, you just need to be "good enough"' },
+  'encourage.2': { zh: '你的存在和陪伴，本身就是最好的干预', en: 'Your presence and companionship is the best intervention' },
+  'encourage.3': { zh: '每一次示范都在他脑中种下种子，即使现在看不到发芽', en: 'Every modeling plants a seed in his mind, even if you can\'t see it sprout yet' },
+  'encourage.4': { zh: '完美的家长不存在，但你正在做的已经很棒了', en: 'Perfect parents don\'t exist, but what you\'re doing is already great' },
+  'encourage.5': { zh: '照顾好自己，才能更好地照顾他', en: 'Take care of yourself first, so you can better care for him' },
+  'encourage.6': { zh: '今天做到的每一点小事，都是进步', en: 'Every small thing you did today is progress' },
+  'encourage.7': { zh: '研究表明：每天15-20分钟的有意识互动就足以产生显著效果', en: 'Research shows: just 15-20 minutes of intentional interaction daily can make a significant impact' },
+  'encourage.8': { zh: '从一个环节开始就好，不需要每个环节都做到', en: 'Start with one routine, you don\'t need to do everything' },
+
+  // AAC page
+  'aac.title': { zh: 'AAC练习', en: 'AAC Practice' },
+  'aac.subtitle': { zh: '帮助ZW在家使用AAC', en: 'Help ZW use AAC at home' },
+  'aac.quickLog': { zh: '快速记录', en: 'Quick log' },
+  'aac.goalReached': { zh: '今天的AAC目标已达成！', en: "Today's AAC goal reached!" },
+  'aac.goalMore': { zh: '当然，多练习更好', en: 'Of course, more practice is great' },
+  'aac.scenarios': { zh: '练习场景', en: 'Scenarios' },
+  'aac.vocabulary': { zh: '词汇表', en: 'Vocabulary' },
+  'aac.all': { zh: '全部', en: 'All' },
+  'aac.howTo': { zh: '怎么做：', en: 'How to:' },
+  'aac.tips': { zh: '小提示：', en: 'Tips:' },
+  'aac.logPractice': { zh: '✓ 我示范了', en: '✓ I modeled it' },
+  'aac.levelBasic': { zh: '基础', en: 'Basic' },
+  'aac.levelMid': { zh: '中级', en: 'Mid' },
+  'aac.levelAdv': { zh: '进阶', en: 'Advanced' },
+
+  // AAC contexts
+  'ctx.greeting': { zh: '打招呼', en: 'Greeting' },
+  'ctx.foodChoice': { zh: '选食物', en: 'Food choice' },
+  'ctx.activityChoice': { zh: '选活动', en: 'Activity choice' },
+  'ctx.requesting': { zh: '请求/要求', en: 'Requesting' },
+  'ctx.commenting': { zh: '描述/评论', en: 'Commenting' },
+  'ctx.protesting': { zh: '拒绝/说停', en: 'Protesting' },
+  'ctx.socialRoutine': { zh: '社交礼貌', en: 'Social routine' },
+
+  // Vocabulary categories
+  'vocab.coreWord': { zh: '⭐ 核心词', en: '⭐ Core Words' },
+  'vocab.food': { zh: '🍎 食物', en: '🍎 Food' },
+  'vocab.action': { zh: '🏃 动作', en: '🏃 Actions' },
+  'vocab.descriptor': { zh: '🎨 描述词', en: '🎨 Descriptors' },
+  'vocab.social': { zh: '👋 社交', en: '👋 Social' },
+  'vocab.feeling': { zh: '😊 感受', en: '😊 Feelings' },
+  'vocab.object': { zh: '📦 物品', en: '📦 Objects' },
+  'vocab.coreNote': { zh: '⭐ 核心词能用在任何场景，优先练习！', en: '⭐ Core words work in any context — practice these first!' },
+
+  // Schedule page
+  'schedule.weekday': { zh: '平日', en: 'Weekday' },
+  'schedule.weekend': { zh: '周末', en: 'Weekend' },
+  'schedule.title': { zh: '日程', en: 'Schedule' },
+  'schedule.weekdayDesc': { zh: '晚间安排 (6:00 PM - 9:00 PM)', en: 'Evening plan (6:00 PM - 9:00 PM)' },
+  'schedule.weekendDesc': { zh: '全天安排', en: 'Full day plan' },
+  'schedule.current': { zh: '-- 正在进行 --', en: '-- In progress --' },
+  'schedule.screen': { zh: '屏幕', en: 'Screen' },
+
+  // History page
+  'history.title': { zh: '历史记录', en: 'History' },
+  'history.subtitle': { zh: '过去7天的数据', en: 'Last 7 days' },
+  'history.avgAAC': { zh: '日均AAC', en: 'Avg AAC' },
+  'history.avgScreen': { zh: '日均屏幕时间', en: 'Avg screen' },
+  'history.goalDays': { zh: '达标天数', en: 'Goal met' },
+  'history.streak': { zh: '连续达标', en: 'Streak' },
+  'history.days': { zh: '天', en: 'days' },
+  'history.times': { zh: '次', en: 'times' },
+  'history.aacChart': { zh: 'AAC练习次数', en: 'AAC practice count' },
+  'history.screenChart': { zh: '屏幕时间（分钟）', en: 'Screen time (min)' },
+  'history.noData': { zh: '还没有数据', en: 'No data yet' },
+  'history.dailyDetail': { zh: '每日详情', en: 'Daily details' },
+  'history.aacLabel': { zh: 'AAC', en: 'AAC' },
+  'history.screenLabel': { zh: '屏幕', en: 'Screen' },
+  'history.activityLabel': { zh: '活动', en: 'Activities' },
+  'history.notMetMessage': { zh: '没关系，明天是新的一天 ✨', en: "That's OK, tomorrow is a new day ✨" },
+
+  // Settings page
+  'settings.title': { zh: '设置', en: 'Settings' },
+  'settings.timeSection': { zh: '时间安排', en: 'Time settings' },
+  'settings.pickupTime': { zh: '平日接孩子时间', en: 'Weekday pickup' },
+  'settings.bedtime': { zh: '平日睡觉时间', en: 'Weekday bedtime' },
+  'settings.weekendWake': { zh: '周末起床时间', en: 'Weekend wake' },
+  'settings.aacGoals': { zh: 'AAC目标', en: 'AAC Goals' },
+  'settings.dailyGoal': { zh: '每日AAC示范次数', en: 'Daily AAC modeling' },
+  'settings.screenTime': { zh: '屏幕时间', en: 'Screen time' },
+  'settings.dailyLimit': { zh: '每日目标上限', en: 'Daily target' },
+  'settings.windowLength': { zh: '每次窗口时长', en: 'Window length' },
+  'settings.minutes': { zh: '分钟', en: 'min' },
+  'settings.notifications': { zh: '通知', en: 'Notifications' },
+  'settings.enableNotif': { zh: '开启提醒通知', en: 'Enable notifications' },
+  'settings.allowNotif': { zh: '请在浏览器设置中允许通知', en: 'Please allow notifications in browser settings' },
+  'settings.equipment': { zh: '家里有的设备/玩具', en: 'Available equipment/toys' },
+  'settings.equipmentNote': { zh: '勾选后APP只会推荐你有的', en: 'App will only suggest items you have' },
+  'settings.iosGuide': { zh: '添加到iPhone主屏幕', en: 'Add to iPhone Home Screen' },
+  'settings.iosStep1': { zh: '在Safari中打开此页面', en: 'Open this page in Safari' },
+  'settings.iosStep2': { zh: '点击底部的分享按钮（方框+箭头）', en: 'Tap the Share button (box+arrow)' },
+  'settings.iosStep3': { zh: '选择"添加到主屏幕"', en: 'Select "Add to Home Screen"' },
+  'settings.iosStep4': { zh: '点击"添加"', en: 'Tap "Add"' },
+  'settings.iosNote': { zh: '添加后可获得全屏体验和通知功能', en: 'Get full-screen experience and notifications after adding' },
+  'settings.version': { zh: 'ZW每日计划 v2.0', en: 'ZW Daily Plan v2.0' },
+  'settings.language': { zh: '语言 / Language', en: 'Language / 语言' },
+  'settings.langZh': { zh: '中文', en: '中文' },
+  'settings.langEn': { zh: 'English', en: 'English' },
+
+  // Notifications
+  'notif.title': { zh: 'ZW每日计划', en: 'ZW Daily Plan' },
+  'notif.aacSuffix': { zh: ' - AAC练习机会！', en: ' - AAC opportunity!' },
+  'notif.upcoming': { zh: '即将开始', en: 'Coming up' },
+  'notif.startsIn2': { zh: '将在2分钟后开始', en: 'starts in 2 minutes' },
+
+  // Time formatting
+  'time.am': { zh: '上午', en: 'AM' },
+  'time.pm': { zh: '下午', en: 'PM' },
+  'time.hours': { zh: '小时', en: 'h' },
+  'time.minutes': { zh: '分钟', en: 'min' },
+  'time.hoursMinutes': { zh: '{h}小时{m}分钟', en: '{h}h {m}min' },
+
+  // Day of week
+  'day.0': { zh: '星期日', en: 'Sunday' },
+  'day.1': { zh: '星期一', en: 'Monday' },
+  'day.2': { zh: '星期二', en: 'Tuesday' },
+  'day.3': { zh: '星期三', en: 'Wednesday' },
+  'day.4': { zh: '星期四', en: 'Thursday' },
+  'day.5': { zh: '星期五', en: 'Friday' },
+  'day.6': { zh: '星期六', en: 'Saturday' },
+} as const;
+
+export type TranslationKey = keyof typeof translations;
+
+export function t(key: TranslationKey, lang: Language): string {
+  return translations[key][lang];
+}
+
+// Encouragement messages - rotate daily
+export function getDailyEncouragement(lang: Language): string {
+  const encourageKeys = Object.keys(translations).filter(k => k.startsWith('encourage.')) as TranslationKey[];
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+  const idx = dayOfYear % encourageKeys.length;
+  return translations[encourageKeys[idx]][lang];
+}

@@ -2,17 +2,20 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useApp } from '../context/AppContext';
 import { ProgressRing } from '../components/common/ProgressRing';
 import { getScheduleForDay, getCurrentSlot, getNextSlot, getSlotProgress, isBeforeSchedule, isAfterSchedule } from '../utils/schedule-engine';
-import { formatTime, getDayOfWeekChinese, getCurrentTimeStr, formatMinutesDisplay } from '../utils/time';
+import { formatTime, getDayOfWeek, getCurrentTimeStr, formatMinutesDisplay } from '../utils/time';
 import { selectActivity } from '../utils/rotation';
 import { aacScenarios } from '../data/aac';
 import { recordActivityUsage } from '../utils/storage';
+import { t, getDailyEncouragement } from '../i18n';
 import type { Activity, AACScenario, AACPracticeLog } from '../types';
 
 export function HomePage() {
   const { state, dispatch } = useApp();
+  const lang = state.settings.language;
   const [currentTime, setCurrentTime] = useState(getCurrentTimeStr());
   const [suggestedActivity, setSuggestedActivity] = useState<Activity | null>(null);
   const [currentScenario, setCurrentScenario] = useState<AACScenario | null>(null);
+  const [showTiredMessage, setShowTiredMessage] = useState(false);
 
   const schedule = useMemo(() => getScheduleForDay(), []);
   const currentSlot = getCurrentSlot(schedule);
@@ -20,13 +23,11 @@ export function HomePage() {
   const beforeSchedule = isBeforeSchedule(schedule);
   const afterSchedule = isAfterSchedule(schedule);
 
-  // Update current time every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(getCurrentTimeStr()), 30000);
     return () => clearInterval(interval);
   }, []);
 
-  // Select an activity for current slot
   useEffect(() => {
     if (currentSlot && currentSlot.activityPoolIds.length > 0) {
       const activity = selectActivity(currentSlot.activityPoolIds);
@@ -81,7 +82,7 @@ export function HomePage() {
   const aacCount = state.todayLog.aacPractices.length;
   const aacGoal = state.settings.aacDailyGoal;
   const aacProgress = Math.min(1, aacCount / aacGoal);
-  const totalScreenTime = state.todayLog.screenTimeSessions.reduce((t, s) => t + s.durationMinutes, 0);
+  const totalScreenTime = state.todayLog.screenTimeSessions.reduce((acc, s) => acc + s.durationMinutes, 0);
   const progress = currentSlot ? getSlotProgress(currentSlot) : 0;
 
   return (
@@ -89,8 +90,8 @@ export function HomePage() {
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <div>
-          <div className="text-sm text-gray-500">{getDayOfWeekChinese()}</div>
-          <div className="text-2xl font-semibold">{formatTime(currentTime)}</div>
+          <div className="text-sm text-gray-500">{getDayOfWeek(lang)}</div>
+          <div className="text-2xl font-semibold">{formatTime(currentTime, lang)}</div>
         </div>
         <div className="flex gap-3">
           <ProgressRing progress={aacProgress} size={56} strokeWidth={4} color={aacCount >= aacGoal ? 'var(--color-success)' : 'var(--color-primary)'}>
@@ -100,14 +101,18 @@ export function HomePage() {
         </div>
       </div>
 
-      {/* Current Activity Card */}
+      {/* Daily encouragement (Principle 5) */}
+      <div className="bg-amber-50 rounded-xl p-3 mb-4 text-center">
+        <div className="text-xs text-amber-700">{getDailyEncouragement(lang)}</div>
+      </div>
+
       {beforeSchedule && (
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-4">
           <div className="text-center text-gray-400 py-8">
             <div className="text-4xl mb-2">🌅</div>
-            <div className="text-lg font-medium text-gray-600">日程还没开始</div>
+            <div className="text-lg font-medium text-gray-600">{t('home.scheduleNotStarted', lang)}</div>
             {nextSlot && (
-              <div className="text-sm mt-1">第一个时间段: {formatTime(nextSlot.startTime)}</div>
+              <div className="text-sm mt-1">{t('home.firstSlot', lang)}: {formatTime(nextSlot.startTime, lang)}</div>
             )}
           </div>
         </div>
@@ -117,94 +122,82 @@ export function HomePage() {
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-4">
           <div className="text-center text-gray-400 py-8">
             <div className="text-4xl mb-2">🌙</div>
-            <div className="text-lg font-medium text-gray-600">今天的日程已结束</div>
-            <div className="text-sm mt-1">好好休息，明天继续加油</div>
+            <div className="text-lg font-medium text-gray-600">{t('home.scheduleEnded', lang)}</div>
+            <div className="text-sm mt-1">{t('home.restWell', lang)}</div>
           </div>
         </div>
       )}
 
       {currentSlot && (
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-4">
-          {/* Slot header */}
           <div className="flex items-center gap-2 mb-3">
             <span className="text-2xl">{currentSlot.icon}</span>
             <div>
               <div className="font-semibold text-lg">{currentSlot.label}</div>
               <div className="text-xs text-gray-400">
-                {formatTime(currentSlot.startTime)} - {formatTime(currentSlot.endTime)}
+                {formatTime(currentSlot.startTime, lang)} - {formatTime(currentSlot.endTime, lang)}
               </div>
             </div>
             {currentSlot.isAACOpportunity && (
-              <span className="ml-auto bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded-full font-medium">
-                AAC
-              </span>
+              <span className="ml-auto bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded-full font-medium">AAC</span>
             )}
           </div>
 
-          {/* Progress bar */}
           <div className="w-full bg-gray-100 rounded-full h-1.5 mb-4">
-            <div
-              className="h-1.5 rounded-full transition-all duration-1000"
-              style={{ width: `${progress * 100}%`, backgroundColor: 'var(--color-primary)' }}
-            />
+            <div className="h-1.5 rounded-full transition-all duration-1000" style={{ width: `${progress * 100}%`, backgroundColor: 'var(--color-primary)' }} />
           </div>
 
-          {/* AAC Scenario */}
+          {/* AAC Scenario (Principle 2: modeling first) */}
           {currentScenario && (
             <div className="bg-blue-50 rounded-xl p-4 mb-3">
-              <div className="font-medium text-blue-800 text-sm mb-1">{currentScenario.title}</div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-lg">{currentScenario.icon}</span>
+                <span className="font-medium text-blue-800 text-sm">{currentScenario.title}</span>
+              </div>
               <div className="text-sm text-blue-700 mb-2">{currentScenario.modelScript}</div>
               {currentScenario.tips.length > 0 && (
-                <div className="text-xs text-blue-500">
-                  {currentScenario.tips[0]}
-                </div>
+                <div className="text-xs text-blue-500 mb-2">{currentScenario.tips[0]}</div>
               )}
+              <div className="text-xs text-blue-400 italic mb-3">{t('home.modelingReminder', lang)}</div>
               <button
                 onClick={handleLogAAC}
-                className="mt-3 w-full bg-blue-500 text-white rounded-lg py-2.5 text-sm font-medium active:bg-blue-600 transition-colors"
+                className="w-full bg-blue-500 text-white rounded-lg py-2.5 text-sm font-medium active:bg-blue-600 transition-colors"
               >
-                记录AAC练习 ({aacCount}/{aacGoal})
+                {t('home.logModeling', lang)} ({aacCount}/{aacGoal})
               </button>
             </div>
           )}
 
-          {/* Suggested Activity */}
           {suggestedActivity && (
             <div className="bg-gray-50 rounded-xl p-4">
               <div className="flex justify-between items-start mb-1">
                 <div className="font-medium text-sm">{suggestedActivity.name}</div>
-                <button
-                  onClick={handleSwapActivity}
-                  className="text-xs text-gray-400 hover:text-gray-600 px-2 py-1"
-                >
-                  换一个
+                <button onClick={handleSwapActivity} className="text-xs text-gray-400 hover:text-gray-600 px-2 py-1">
+                  {t('home.swapActivity', lang)}
                 </button>
               </div>
               <div className="text-sm text-gray-600 mb-2">{suggestedActivity.description}</div>
               {suggestedActivity.aacIntegration && (
                 <div className="text-xs text-gray-400 mb-2">
-                  AAC词汇: {suggestedActivity.aacIntegration.suggestedWords.join('、')}
+                  {t('home.aacVocab', lang)}: {suggestedActivity.aacIntegration.suggestedWords.join('、')}
                 </div>
               )}
               <button
                 onClick={handleCompleteActivity}
                 className="w-full bg-gray-200 text-gray-700 rounded-lg py-2 text-sm font-medium active:bg-gray-300 transition-colors"
               >
-                完成活动
+                {t('home.activityDone', lang)}
               </button>
             </div>
           )}
 
-          {/* Screen Time */}
           {currentSlot.isScreenTime && (
             <div className="bg-amber-50 rounded-xl p-4">
               <div className="text-center">
-                <div className="text-sm text-amber-700 font-medium mb-2">屏幕时间窗口</div>
-                <div className="text-3xl font-bold text-amber-800">
-                  {formatMinutesDisplay(state.settings.screenTimeWindowMinutes)}
-                </div>
+                <div className="text-sm text-amber-700 font-medium mb-2">{t('home.screenTimeWindow', lang)}</div>
+                <div className="text-3xl font-bold text-amber-800">{formatMinutesDisplay(state.settings.screenTimeWindowMinutes, lang)}</div>
                 <div className="text-xs text-amber-500 mt-1">
-                  今日已用: {formatMinutesDisplay(totalScreenTime)} / {formatMinutesDisplay(state.settings.screenTimeTargetMinutes)}
+                  {t('home.usedToday', lang)}: {formatMinutesDisplay(totalScreenTime, lang)} / {formatMinutesDisplay(state.settings.screenTimeTargetMinutes, lang)}
                 </div>
               </div>
             </div>
@@ -212,12 +205,11 @@ export function HomePage() {
         </div>
       )}
 
-      {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="text-xs text-gray-400 mb-1">今日屏幕时间</div>
-          <div className="text-lg font-semibold">{formatMinutesDisplay(totalScreenTime)}</div>
-          <div className="text-xs text-gray-400">目标: {formatMinutesDisplay(state.settings.screenTimeTargetMinutes)}</div>
+          <div className="text-xs text-gray-400 mb-1">{t('home.screenTimeToday', lang)}</div>
+          <div className="text-lg font-semibold">{formatMinutesDisplay(totalScreenTime, lang)}</div>
+          <div className="text-xs text-gray-400">{t('home.target', lang)}: {formatMinutesDisplay(state.settings.screenTimeTargetMinutes, lang)}</div>
           <div className="w-full bg-gray-100 rounded-full h-1.5 mt-2">
             <div
               className="h-1.5 rounded-full transition-all"
@@ -228,25 +220,35 @@ export function HomePage() {
             />
           </div>
         </div>
-
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="text-xs text-gray-400 mb-1">已完成活动</div>
+          <div className="text-xs text-gray-400 mb-1">{t('home.activitiesDone', lang)}</div>
           <div className="text-lg font-semibold">{state.todayLog.completedActivities.length}</div>
           <div className="text-xs text-gray-400 mt-1">
-            {state.todayLog.completedActivities.length === 0 ? '还没有活动' : '继续加油'}
+            {state.todayLog.completedActivities.length === 0 ? t('home.noActivities', lang) : t('home.keepGoing', lang)}
           </div>
         </div>
       </div>
 
-      {/* Next Up */}
+      {/* "Too tired" button (Principle 5) */}
+      {!showTiredMessage && aacCount < aacGoal && (
+        <button onClick={() => setShowTiredMessage(true)} className="w-full text-center text-xs text-gray-400 py-2 mb-3">
+          {t('home.tooTired', lang)}
+        </button>
+      )}
+      {showTiredMessage && (
+        <div className="bg-purple-50 rounded-xl p-4 mb-4 text-center">
+          <div className="text-sm text-purple-700">{t('home.tooTiredConfirm', lang)}</div>
+        </div>
+      )}
+
       {nextSlot && !afterSchedule && (
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="text-xs text-gray-400 mb-2">接下来</div>
+          <div className="text-xs text-gray-400 mb-2">{t('home.nextUp', lang)}</div>
           <div className="flex items-center gap-2">
             <span className="text-xl">{nextSlot.icon}</span>
             <div>
               <div className="font-medium text-sm">{nextSlot.label}</div>
-              <div className="text-xs text-gray-400">{formatTime(nextSlot.startTime)}</div>
+              <div className="text-xs text-gray-400">{formatTime(nextSlot.startTime, lang)}</div>
             </div>
             {nextSlot.isAACOpportunity && (
               <span className="ml-auto bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded-full">AAC</span>

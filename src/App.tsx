@@ -9,6 +9,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { getScheduleForDay, getCurrentSlot, getNextSlot } from './utils/schedule-engine';
 import { sendNotification, canSendNotifications } from './utils/notifications';
 import { timeToMinutes, getCurrentMinutes } from './utils/time';
+import { t } from './i18n';
 
 function AppContent() {
   const [activePage, setActivePage] = useState('home');
@@ -24,15 +25,17 @@ function AppContent() {
       const current = getCurrentSlot(schedule);
       const next = getNextSlot(schedule);
 
+      const lang = state.settings.language;
+
       // Notify when entering a new slot
       if (current && current.id !== lastNotifiedSlot) {
         setLastNotifiedSlot(current.id);
         if (canSendNotifications()) {
           let body = current.label;
           if (current.isAACOpportunity) {
-            body += ' - AAC练习机会！';
+            body += t('notif.aacSuffix', lang);
           }
-          sendNotification('卓伟每日计划', body);
+          sendNotification(t('notif.title', lang), body);
         }
       }
 
@@ -40,7 +43,7 @@ function AppContent() {
       if (next) {
         const minutesUntil = timeToMinutes(next.startTime) - getCurrentMinutes();
         if (minutesUntil === 2 && canSendNotifications()) {
-          sendNotification('即将开始', `${next.label} 将在2分钟后开始`);
+          sendNotification(t('notif.upcoming', lang), `${next.label} ${t('notif.startsIn2', lang)}`);
         }
       }
     };
@@ -48,7 +51,7 @@ function AppContent() {
     const interval = setInterval(checkSlot, 30000);
     checkSlot(); // Initial check
     return () => clearInterval(interval);
-  }, [state.settings.notificationsEnabled, lastNotifiedSlot]);
+  }, [state.settings.notificationsEnabled, state.settings.language, lastNotifiedSlot]);
 
   const renderPage = () => {
     switch (activePage) {

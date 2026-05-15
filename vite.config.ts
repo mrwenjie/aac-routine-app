@@ -12,7 +12,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: '卓伟每日计划',
+        name: 'ZW每日计划',
         short_name: '每日计划',
         description: 'AAC练习提醒与日程管理',
         theme_color: '#4A90D9',

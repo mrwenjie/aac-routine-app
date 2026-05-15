@@ -83,6 +83,7 @@ export interface AACVocabularyItem {
   id: string;
   word: string;
   wordEn: string;
+  icon: string;
   category: VocabCategory;
   contexts: AACContext[];
   difficultyLevel: 1 | 2 | 3;
@@ -90,6 +91,7 @@ export interface AACVocabularyItem {
 
 export interface AACScenario {
   id: string;
+  icon: string;
   context: AACContext;
   title: string;
   description: string;
@@ -141,6 +143,7 @@ export interface AppSettings {
   preferredActivities: string[];
   dislikedActivities: string[];
   aacDailyGoal: number;
+  language: 'zh' | 'en';
 }
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -155,4 +158,5 @@ export const DEFAULT_SETTINGS: AppSettings = {
   preferredActivities: [],
   dislikedActivities: [],
   aacDailyGoal: 3,
+  language: 'zh',
 };

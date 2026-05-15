@@ -1,4 +1,5 @@
 import type { DayType } from '../types';
+import type { Language } from '../i18n';
 
 export function parseTime(timeStr: string): { hours: number; minutes: number } {
   const [hours, minutes] = timeStr.split(':').map(Number);
@@ -26,16 +27,26 @@ export function getCurrentMinutes(): number {
   return now.getHours() * 60 + now.getMinutes();
 }
 
-export function formatTime(timeStr: string): string {
+export function formatTime(timeStr: string, lang: Language = 'zh'): string {
   const { hours, minutes } = parseTime(timeStr);
+  if (lang === 'en') {
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
+    return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+  }
   const period = hours >= 12 ? '下午' : '上午';
   const displayHours = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
   return `${period} ${displayHours}:${minutes.toString().padStart(2, '0')}`;
 }
 
-export function formatMinutesDisplay(totalMinutes: number): string {
+export function formatMinutesDisplay(totalMinutes: number, lang: Language = 'zh'): string {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
+  if (lang === 'en') {
+    if (hours > 0 && minutes > 0) return `${hours}h ${minutes}min`;
+    if (hours > 0) return `${hours}h`;
+    return `${minutes}min`;
+  }
   if (hours > 0 && minutes > 0) return `${hours}小时${minutes}分钟`;
   if (hours > 0) return `${hours}小时`;
   return `${minutes}分钟`;
@@ -57,7 +68,14 @@ export function getTodayDateStr(): string {
   return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
 }
 
+export function getDayOfWeek(lang: Language = 'zh'): string {
+  const zhDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+  const enDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const day = new Date().getDay();
+  return lang === 'en' ? enDays[day] : zhDays[day];
+}
+
+// Keep backward compat
 export function getDayOfWeekChinese(): string {
-  const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-  return days[new Date().getDay()];
+  return getDayOfWeek('zh');
 }
